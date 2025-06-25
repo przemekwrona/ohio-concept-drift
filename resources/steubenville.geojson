@@ -17,7 +17,8 @@
         "source": "TIGER/Line® 2008 Place Shapefiles (http://www.census.gov/geo/www/tiger/)",
         "type": "boundary",
         "wikidata": "Q986432",
-        "wikipedia": "en:Steubenville, Ohio"
+        "wikipedia": "en:Steubenville, Ohio",
+        "ML_region": "08_STEUBENVILLE"
       },
       "geometry": {
         "type": "MultiPolygon",

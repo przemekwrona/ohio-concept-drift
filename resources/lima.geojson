@@ -19,7 +19,8 @@
         "type": "boundary",
         "website": "https://www.cityhall.lima.oh.us/",
         "wikidata": "Q983974",
-        "wikipedia": "en:Lima, Ohio"
+        "wikipedia": "en:Lima, Ohio",
+        "ML_region": "02_LIMA"
       },
       "geometry": {
         "type": "Polygon",

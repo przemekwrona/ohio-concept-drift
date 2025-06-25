@@ -17,7 +17,8 @@
         "source": "TIGER/Line® 2008 Place Shapefiles (http://www.census.gov/geo/www/tiger/)",
         "type": "boundary",
         "wikidata": "Q49239",
-        "wikipedia": "en:Toledo, Ohio"
+        "wikipedia": "en:Toledo, Ohio",
+        "ML_region": "01_TOLEDO"
       },
       "geometry": {
         "type": "Polygon",
