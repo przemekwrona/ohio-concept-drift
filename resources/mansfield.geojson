@@ -15,7 +15,8 @@
         "place": "town",
         "type": "boundary",
         "wikidata": "Q983698",
-        "wikipedia": "en:Mansfield, Ohio"
+        "wikipedia": "en:Mansfield, Ohio",
+        "ML_region": "07_MANSFIELD"
       },
       "geometry": {
         "type": "Polygon",

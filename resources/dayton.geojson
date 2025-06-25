@@ -16,7 +16,8 @@
         "source": "TIGER/Line® 2008 Place Shapefiles (http://www.census.gov/geo/www/tiger/)",
         "type": "boundary",
         "wikidata": "Q34739",
-        "wikipedia": "en:Dayton, Ohio"
+        "wikipedia": "en:Dayton, Ohio",
+        "ML_region": "03_DAYTON"
       },
       "geometry": {
         "type": "MultiPolygon",

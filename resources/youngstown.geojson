@@ -19,7 +19,8 @@
         "source:population": "DBpedia",
         "type": "boundary",
         "wikidata": "Q216820",
-        "wikipedia": "en:Youngstown, Ohio"
+        "wikipedia": "en:Youngstown, Ohio",
+        "ML_region": "09_YOUNGSTOWN"
       },
       "geometry": {
         "type": "Polygon",

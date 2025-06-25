@@ -17,7 +17,8 @@
         "source": "TIGER/Line® 2008 Place Shapefiles (http://www.census.gov/geo/www/tiger/)",
         "type": "boundary",
         "wikidata": "Q491239",
-        "wikipedia": "en:Canton, Ohio"
+        "wikipedia": "en:Canton, Ohio",
+        "ML_region": "06_CANTON"
       },
       "geometry": {
         "type": "Polygon",

@@ -19,7 +19,8 @@
         "source": "TIGER/Line® 2008 Place Shapefiles (http://www.census.gov/geo/www/tiger/)",
         "type": "boundary",
         "wikidata": "Q40325",
-        "wikipedia": "en:Springfield, Ohio"
+        "wikipedia": "en:Springfield, Ohio",
+        "ML_region": "04_SPRINGFIELD"
       },
       "geometry": {
         "type": "Polygon",

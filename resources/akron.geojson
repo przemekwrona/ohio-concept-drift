@@ -17,7 +17,8 @@
         "source": "TIGER/Line® 2008 Place Shapefiles (http://www.census.gov/geo/www/tiger/)",
         "type": "boundary",
         "wikidata": "Q163132",
-        "wikipedia": "en:Akron, Ohio"
+        "wikipedia": "en:Akron, Ohio",
+        "ML_region": "05_AKRON"
       },
       "geometry": {
         "type": "Polygon",
