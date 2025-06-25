@@ -1,4 +1,3 @@
-import geopandas as gpd
 import matplotlib.pyplot as plt
 
 from ohio_concept_drift import geometry
@@ -7,7 +6,7 @@ from ohio_concept_drift import geometry
 def plot_ohio_state():
     # Load the GeoJSON file into a GeoDataFrame
     try:
-        ohio_geometry = gpd.read_file(geometry.OHIO_GEOMETRY)
+        ohio_geometry = geometry.load_ohio_geoframe()
 
         # Basic plot
         ohio_geometry.plot(edgecolor='black', linewidth=1)
