@@ -4656,30 +4656,6 @@
         ]
       },
       "id": "relation/182514"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "@id": "node/18954801",
-        "@relations": [
-          {
-            "role": "admin_centre",
-            "rel": "182514",
-            "reltags": {
-              "admin_level": "8",
-              "border_type": "city",
-              "boundary": "administrative",
-              "name": "Toledo",
-              "name:ar": "توليدو",
-              "place": "city",
-              "source": "TIGER/Line® 2008 Place Shapefiles (http://www.census.gov/geo/www/tiger/)",
-              "type": "boundary",
-              "wikidata": "Q49239",
-              "wikipedia": "en:Toledo, Ohio"
-            }
-          }
-        ]
-      }
     }
   ]
 }

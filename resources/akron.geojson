@@ -7264,30 +7264,6 @@
         ]
       },
       "id": "relation/182644"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "@id": "node/153847849",
-        "@relations": [
-          {
-            "role": "label",
-            "rel": "182644",
-            "reltags": {
-              "admin_level": "8",
-              "border_type": "city",
-              "boundary": "administrative",
-              "gnis:feature_id": "1086993",
-              "name": "Akron",
-              "place": "city",
-              "source": "TIGER/Line® 2008 Place Shapefiles (http://www.census.gov/geo/www/tiger/)",
-              "type": "boundary",
-              "wikidata": "Q163132",
-              "wikipedia": "en:Akron, Ohio"
-            }
-          }
-        ]
-      }
     }
   ]
 }

@@ -11508,32 +11508,6 @@
         ]
       },
       "id": "relation/182725"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "@id": "node/154327397",
-        "@relations": [
-          {
-            "role": "admin_centre",
-            "rel": "182725",
-            "reltags": {
-              "admin_level": "7",
-              "border_type": "city",
-              "boundary": "administrative",
-              "gnis:feature_id": "1085694",
-              "name": "Lima",
-              "name:pronunciation": "ˈlaɪmə",
-              "place": "city",
-              "source": "Allen Co Engineer http://gis.allencountyohio.com/GIS/downloads.html (Political Subdivision shapefile - update 2019-01-01)",
-              "type": "boundary",
-              "website": "https://www.cityhall.lima.oh.us/",
-              "wikidata": "Q983974",
-              "wikipedia": "en:Lima, Ohio"
-            }
-          }
-        ]
-      }
     }
   ]
 }
