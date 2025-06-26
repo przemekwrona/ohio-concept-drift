@@ -4082,32 +4082,6 @@
         ]
       },
       "id": "relation/181934"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "@id": "node/5089962575",
-        "@relations": [
-          {
-            "role": "label",
-            "rel": "181934",
-            "reltags": {
-              "admin_level": "8",
-              "border_type": "city",
-              "boundary": "administrative",
-              "gnis:feature_id": "1086573",
-              "name": "Youngstown",
-              "place": "city",
-              "population": "66982",
-              "source": "TIGER/Line® 2008 Place Shapefiles (http://www.census.gov/geo/www/tiger/)",
-              "source:population": "DBpedia",
-              "type": "boundary",
-              "wikidata": "Q216820",
-              "wikipedia": "en:Youngstown, Ohio"
-            }
-          }
-        ]
-      }
     }
   ]
 }

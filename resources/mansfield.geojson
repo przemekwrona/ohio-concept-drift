@@ -4174,28 +4174,6 @@
         ]
       },
       "id": "relation/182659"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "@id": "node/153937284",
-        "@relations": [
-          {
-            "role": "admin_centre",
-            "rel": "182659",
-            "reltags": {
-              "admin_level": "8",
-              "border_type": "city",
-              "boundary": "administrative",
-              "name": "Mansfield",
-              "place": "town",
-              "type": "boundary",
-              "wikidata": "Q983698",
-              "wikipedia": "en:Mansfield, Ohio"
-            }
-          }
-        ]
-      }
     }
   ]
 }
