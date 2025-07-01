@@ -4,7 +4,7 @@ from shapely.affinity import scale
 from ohio_concept_drift import geometry
 
 
-def plot_ohio_state(geodata, file_name):
+def plot_ohio_state(geodata, column_name, file_name, vmax):
     # Load the GeoJSON file into a GeoDataFrame
     try:
         ohio_state_geometry = geometry.load_ohio_state()
@@ -29,7 +29,7 @@ def plot_ohio_state(geodata, file_name):
 
         # Plot polygons
         # ohio_cities_geometry[ohio_cities_geometry.geometry.type == 'Polygon'].plot(ax=ax, color='red', edgecolor='black', legend=True)
-        ohio_state_scaled_geometry.plot(column='total_drift_detection', ax=ax, legend=True, cmap='viridis', vmin=0, vmax=10, legend_kwds={
+        ohio_state_scaled_geometry.plot(column=column_name, ax=ax, legend=True, cmap='viridis', vmin=0, vmax=vmax, legend_kwds={
             'label': "Total Drift Detection",  # Custom label for the colorbar
             'orientation': "vertical",  # Position the colorbar horizontally
             'shrink': 0.88,  # Reduce its size
