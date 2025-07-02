@@ -237,3 +237,9 @@ def ohio_cites_geopandas():
     ohio_cities = pd.concat([toledo, lima, dayton, springfield, akron, canton, mansfield, steubenville, youngstown, rural], ignore_index=True)
 
     return ohio_cities
+
+
+def warsaw_districts_geopandas():
+    warsaw_districts = load_geoframe("resources/warsaw/warszawa-dzielnice.geojson")
+
+    return warsaw_districts
