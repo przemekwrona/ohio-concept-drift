@@ -2,7 +2,8 @@ import pandas as pd
 from scipy.io import arff
 
 OHIO_PATH = 'resources/AllOhioDataSorted_2.arff'
-DRIFT_PATH = 'resources/drift_log.csv'
+OHIO_DRIFT_PATH = 'resources/drift_log.csv'
+WARSAW_DRIFT_PATH = 'resources/warsaw_drift_log.csv'
 
 
 def load_ohio_arff():
@@ -10,11 +11,17 @@ def load_ohio_arff():
     return pd.DataFrame(data)
 
 
-def load_detected_drift():
-    df = pd.read_csv(DRIFT_PATH)
+def load_ohio_detected_drift():
+    return pd.read_csv(OHIO_DRIFT_PATH)
 
-    return df
+
+def load_warsaw_detected_drift():
+    return pd.read_csv(WARSAW_DRIFT_PATH)
 
 
 def load_warsaw_surveys():
     return pd.read_csv('resources/CITIZENS_W1_W2_5_1_1_fixed_merged(in).csv', encoding='ISO-8859-1', sep=';', decimal='.')
+
+
+def load_warsaw_surveyss():
+    return pd.read_csv('resources/CITIZENS_W1_W2_5_1_1_fixed_merged(in)_with_vistula_district_and_bank.csv', encoding='UTF-8', sep=';', decimal='.')

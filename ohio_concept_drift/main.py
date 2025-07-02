@@ -1,9 +1,14 @@
 from ohio_concept_drift.warsaw_surveys import assign_district_and_vistula_bank
 from ohio_concept_drift.ohio_data import plot_ohio
+from ohio_concept_drift.warsaw_data import plot_warsaw
 
 
 def task_plot_ohio():
     plot_ohio()
+
+
+def task_plot_warsaw():
+    plot_warsaw()
 
 
 def district_and_vistula_bank():
