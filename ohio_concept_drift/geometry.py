@@ -159,7 +159,7 @@ def load_mansfield():
 def load_rural():
     rural_request_body = """
     (
-        relation["name"="Ashtabula"]["type"="boundary"]["boundary"="administrative"]["admin_level"=7];
+        relation["ref"="ATB"]["border_type"="county"]["boundary"="administrative"];
         relation["ref"="AUG"]["border_type"="county"]["boundary"="administrative"];
         relation["ref"="BEL"]["border_type"="county"]["boundary"="administrative"];
         relation["ref"="BRO"]["border_type"="county"]["boundary"="administrative"];
