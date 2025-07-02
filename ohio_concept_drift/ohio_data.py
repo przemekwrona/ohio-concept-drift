@@ -9,7 +9,7 @@ def ohio_data_frame():
     ohio_dataset['ML_region'] = ohio_dataset['ML_region'].str.decode('utf-8')
     grouped_number_of_instances_by_region = ohio_dataset.groupby('ML_region').agg(number_of_instances=('ML_region', 'count'))
 
-    ohio_detected_drift = resources.load_detected_drift()
+    ohio_detected_drift = resources.load_ohio_detected_drift()
     grouped_drift_detection_by_region = ohio_detected_drift.groupby('region').agg(total_drift_detection=('drift_type', 'count'),
                                                                                   first_occurrence_index=('instance_index', 'min'),
                                                                                   last_occurrence_index=('instance_index', 'max'))
