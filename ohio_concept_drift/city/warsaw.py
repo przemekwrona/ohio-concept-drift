@@ -22,12 +22,15 @@ class Warsaw:
             raise ValueError(f"Expected DataFrame of length 1, but got {len(districts)}. None of districts")
 
         district_name = districts.iloc[0]['name'].upper()
+        vistula_bank = self.map_district_to_vistula_bank(district_name)
 
+        return district_name, vistula_bank
+
+    def map_district_to_vistula_bank(self, district_name):
         if district_name in ["PRAGA PÓŁNOC", "PRAGA POŁUDNIE", "BIAŁOŁĘKA", "TARGÓWEK", "WESOŁA", "WAWER", "REMBERTÓW"]:
             vistula_bank = "RIGHT_VISTULA_BANK"
         elif district_name in ["WOLA", "MOKOTÓW", "BEMOWO", "ŚRÓDMIEŚCIE", "OCHOTA", "BIELANY", "URSUS", "ŻOLIBORZ", "URSYNÓW", "WŁOCHY", "WILANÓW"]:
             vistula_bank = "LEFT_VISTULA_BANK"
         else:
             raise ValueError(f"Not recognized district: {district_name}")
-
-        return district_name, vistula_bank
+        return vistula_bank
