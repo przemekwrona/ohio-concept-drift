@@ -6,17 +6,8 @@ DRIFT_PATH = 'resources/drift_log.csv'
 
 
 def load_ohio_arff():
-    # Load the .arff file
     data, meta = arff.loadarff(OHIO_PATH)
-
-    # Convert to Pandas DataFrame
-    df = pd.DataFrame(data)
-
-    # If any columns are byte strings, decode them (optional)
-    # for col in df.select_dtypes([object]):
-    #     df[col] = df[col].str.decode('utf-8')
-
-    return df
+    return pd.DataFrame(data)
 
 
 def load_detected_drift():
