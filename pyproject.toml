@@ -20,3 +20,4 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 ohio = "ohio_concept_drift.main:run"
+vistula = "ohio_concept_drift.main:district_and_vistula_bank"
