@@ -2,6 +2,7 @@ from ohio_concept_drift import resources
 from ohio_concept_drift import geometry
 from ohio_concept_drift import plotter
 import pandas as pd
+from ohio_concept_drift.warsaw_surveys import assign_district_and_vistula_bank
 
 
 def run():
@@ -14,8 +15,10 @@ def run():
 
     ohio_cities = geometry.ohio_cites_geopandas()
 
-    ohio_results = pd.merge(ohio_cities, grouped_drift_detection_by_region, left_on='ML_region', right_on='region', how='left')
-    ohio_results = pd.merge(ohio_results, grouped_number_of_instances_by_region, on='ML_region', how='left')
+def district_and_vistula_bank():
+    warsaw_surveys = assign_district_and_vistula_bank()
+    warsaw_surveys.to_csv('resources/CITIZENS_W1_W2_5_1_1_fixed_merged(in)_with_vistula_district_and_bank.csv', encoding='UTF-8', sep=';', decimal='.',
+                          index=False)
 
     ohio_results['total_drift_detection'] = ohio_results['total_drift_detection'].fillna(0)
     ohio_results['number_of_instances'] = ohio_results['number_of_instances'].fillna(0)

@@ -23,3 +23,7 @@ def load_detected_drift():
     df = pd.read_csv(DRIFT_PATH)
 
     return df
+
+
+def load_warsaw_surveys():
+    return pd.read_csv('resources/CITIZENS_W1_W2_5_1_1_fixed_merged(in).csv', encoding='ISO-8859-1', sep=';', decimal='.')
