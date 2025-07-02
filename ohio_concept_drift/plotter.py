@@ -1,11 +1,16 @@
 import matplotlib.pyplot as plt
+import numpy as np
 
 from shapely.affinity import scale
 from ohio_concept_drift import geometry
 
 
-def plot_ohio_state(geodata, column_name, file_name, vmax):
+def plot_ohio_state(geodata, column_name, file_name, vmax=None):
     # Load the GeoJSON file into a GeoDataFrame
+
+    if vmax is None:
+        vmax = np.max(geodata[column_name])
+
     try:
         ohio_state_geometry = geometry.load_ohio_state()
 
