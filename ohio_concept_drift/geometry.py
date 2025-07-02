@@ -2,8 +2,30 @@ import json
 import geopandas as gpd
 import pandas as pd
 import sys
+import overpass
+import os
 
 OHIO_GEOMETRY = 'resources/ohio/ohio.geojson'
+
+
+def request_overpass(request_body, ml_region, geojson_file_name):
+    geojson_file_path = f"resources/ohio/{geojson_file_name}"
+    if os.path.exists(geojson_file_path):
+        return
+
+    api = overpass.API()
+    response = api.get(request_body)
+
+    multipolygons = []
+    for feature in response["features"]:
+        if feature['geometry']['type'] == 'MultiPolygon':
+            feature['properties']['ML_region'] = ml_region
+            multipolygons.append(feature)
+
+    response["features"] = multipolygons
+
+    with open(geojson_file_path, "w") as f:
+        json.dump(response, f, indent=4)
 
 
 def load_geoframe(path):
@@ -132,6 +154,72 @@ def load_mansfield():
     out geom;
     """
     return load_geoframe("resources/ohio/mansfield.geojson")
+
+
+def load_rural():
+    rural_request_body = """
+    (
+        relation["name"="Ashtabula"]["type"="boundary"]["boundary"="administrative"]["admin_level"=7];
+        relation["ref"="AUG"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="BEL"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="BRO"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="CAR"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="COL"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="CRA"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="FUL"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="LAW"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="WAS"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="ADA"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="ASD"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="ATH"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="CHP"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="CLI"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="COS"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="DAR"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="DEF"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="ERI"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="GAL"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="GUE"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="HAN"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="HAR"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="HAS"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="HEN"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="HIG"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="HOC"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="JAC"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="KNO"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="LOG"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="MAR"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="MEG"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="MER"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="MOE"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="MRG"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="MRW"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="MUS"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="NOB"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="OTT"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="PAU"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="PER"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="PIK"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="PRE"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="PUT"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="ROS"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="SAN"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="SCI"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="SEN"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="SHE"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="TUS"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="VAN"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="VIN"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="WAY"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="WIL"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="WYA"]["border_type"="county"]["boundary"="administrative"];
+    );
+    out geom;
+    """
+
+    request_overpass(rural_request_body, '10_RURAL', 'rural.geojson')
+    return load_geoframe("resources/ohio/rural.geojson")
 
 
 def ohio_cites_geopandas():
