@@ -3,7 +3,7 @@ import geopandas as gpd
 import pandas as pd
 import sys
 
-OHIO_GEOMETRY = 'resources/ohio.geojson'
+OHIO_GEOMETRY = 'resources/ohio/ohio.geojson'
 
 
 def load_geoframe(path):
@@ -33,7 +33,7 @@ def load_geoframe(path):
 
 
 def load_ohio_state():
-    return load_geoframe('resources/ohio.geojson')
+    return load_geoframe('resources/ohio/ohio.geojson')
 
 
 def load_toledo():
@@ -45,7 +45,7 @@ def load_toledo():
     );
     out geom;
     """
-    return load_geoframe("resources/toledo.geojson")
+    return load_geoframe("resources/ohio/toledo.geojson")
 
 
 def load_dayton():
@@ -57,7 +57,7 @@ def load_dayton():
     );
     out geom;
     """
-    return load_geoframe("resources/dayton.geojson")
+    return load_geoframe("resources/ohio/dayton.geojson")
 
 
 def load_lima():
@@ -67,7 +67,7 @@ def load_lima():
     );
     out geom;
     """
-    return load_geoframe("resources/lima.geojson")
+    return load_geoframe("resources/ohio/lima.geojson")
 
 
 def load_springfield():
@@ -77,7 +77,7 @@ def load_springfield():
     );
     out geom;
     """
-    return load_geoframe("resources/springfield.geojson")
+    return load_geoframe("resources/ohio/springfield.geojson")
 
 
 def load_canton():
@@ -87,7 +87,7 @@ def load_canton():
     );
     out geom;
     """
-    return load_geoframe("resources/canton.geojson")
+    return load_geoframe("resources/ohio/canton.geojson")
 
 
 def load_youngstown():
@@ -98,7 +98,7 @@ def load_youngstown():
     );
     out geom;
     """
-    return load_geoframe("resources/youngstown.geojson")
+    return load_geoframe("resources/ohio/youngstown.geojson")
 
 
 def load_steubenville():
@@ -110,7 +110,7 @@ def load_steubenville():
     );
     out geom;
     """
-    return load_geoframe("resources/steubenville.geojson")
+    return load_geoframe("resources/ohio/steubenville.geojson")
 
 
 def load_akron():
@@ -121,7 +121,7 @@ def load_akron():
     );
     out geom;
     """
-    return load_geoframe("resources/akron.geojson")
+    return load_geoframe("resources/ohio/akron.geojson")
 
 
 def load_mansfield():
@@ -131,7 +131,7 @@ def load_mansfield():
     );
     out geom;
     """
-    return load_geoframe("resources/mansfield.geojson")
+    return load_geoframe("resources/ohio/mansfield.geojson")
 
 
 def ohio_cites_geopandas():
