@@ -232,9 +232,10 @@ def ohio_cites_geopandas():
     mansfield = load_mansfield()
     steubenville = load_steubenville()
     youngstown = load_youngstown()
+    rural = load_rural()
 
     # ohio_cities = pd.concat([toledo, lima, dayton, springfield, canton, youngstown, steubenville, akron, mansfield], ignore_index=True)
-    ohio_cities = pd.concat([toledo, lima, dayton, springfield, akron, canton, mansfield, steubenville, youngstown], ignore_index=True)
+    ohio_cities = pd.concat([toledo, lima, dayton, springfield, akron, canton, mansfield, steubenville, youngstown, rural], ignore_index=True)
     # ohio_cities = pd.concat([steubenville], ignore_index=True)
 
     return ohio_cities
