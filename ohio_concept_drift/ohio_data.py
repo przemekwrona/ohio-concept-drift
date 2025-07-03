@@ -34,8 +34,8 @@ def ohio_data_frame():
 def plot_ohio():
     ohio_results = ohio_data_frame()
 
-    plotter.plot_ohio_state(ohio_results, column_name='total_drift_detection', file_name='number_of_detection.pdf', vmax=10)
-    plotter.plot_ohio_state(ohio_results, column_name='number_of_instances', file_name='number_of_instances.pdf', vmax=20000)
-    plotter.plot_ohio_state(ohio_results, column_name='drift_frequency_per_10k', file_name='drift_frequency_per_10k.pdf', vmax=5)
-    plotter.plot_ohio_state(ohio_results, column_name='first_occurrence_index', file_name='first_occurrence_ratio.pdf')
-    plotter.plot_ohio_state(ohio_results, column_name='last_occurrence_index', file_name='last_occurrence_ratio.pdf')
+    plotter.plot_ohio_state(ohio_results, column_name='total_drift_detection', file_name='ohio/number_of_detection.pdf', vmax=10)
+    plotter.plot_ohio_state(ohio_results, column_name='number_of_instances', file_name='ohio/number_of_instances.pdf', vmax=20000)
+    plotter.plot_ohio_state(ohio_results, column_name='drift_frequency_per_10k', file_name='ohio/drift_frequency_per_10k.pdf', vmax=5)
+    plotter.plot_ohio_state(ohio_results, column_name='first_occurrence_index', file_name='ohio/first_occurrence_ratio.pdf')
+    plotter.plot_ohio_state(ohio_results, column_name='last_occurrence_index', file_name='ohio/last_occurrence_ratio.pdf')
