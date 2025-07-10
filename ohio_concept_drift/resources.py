@@ -11,8 +11,8 @@ def load_ohio_arff():
     return pd.DataFrame(data)
 
 
-def load_ohio_detected_drift():
-    return pd.read_csv(OHIO_DRIFT_PATH)
+def load_ohio_detected_drift(drift_results_directory):
+    return pd.read_csv(f"{drift_results_directory}/drift_log.csv")
 
 
 def load_warsaw_detected_drift():
