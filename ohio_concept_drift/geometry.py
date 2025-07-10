@@ -156,6 +156,46 @@ def load_mansfield():
     return load_geoframe("resources/ohio/mansfield.geojson")
 
 
+def load_cincinnati():
+    cincinnati_request_body = """
+    (
+      relation["ref"="CLE"]["border_type"="county"]["boundary"="administrative"];
+      relation["ref"="WAR"]["border_type"="county"]["boundary"="administrative"];
+      relation["ref"="BUT"]["border_type"="county"]["boundary"="administrative"];
+      relation["ref"="HAM"]["border_type"="county"]["boundary"="administrative"];
+    );
+    out geom;
+    """
+    request_overpass(cincinnati_request_body, 'cincinnati', 'cincinnati.geojson')
+    return load_geoframe("resources/ohio/cincinnati.geojson")
+
+
+def load_columbus():
+    cincinnati_request_body = """
+    (
+      relation["ref"="FRA"]["border_type"="county"]["boundary"="administrative"];
+      relation["ref"="LIC"]["border_type"="county"]["boundary"="administrative"];
+    );
+    out geom;
+    """
+    request_overpass(cincinnati_request_body, 'columbus', 'columbus.geojson')
+    return load_geoframe("resources/ohio/columbus.geojson")
+
+
+def load_cleveland():
+    cleveland_request_body = """
+    (
+      relation["ref"="MED"]["border_type"="county"]["boundary"="administrative"];
+      relation["ref"="LOR"]["border_type"="county"]["boundary"="administrative"];
+      relation["ref"="CUY"]["border_type"="county"]["boundary"="administrative"];
+      relation["ref"="GEA"]["border_type"="county"]["boundary"="administrative"];
+    );
+    out geom;
+    """
+    request_overpass(cleveland_request_body, 'cleveland', 'cleveland.geojson')
+    return load_geoframe("resources/ohio/cleveland.geojson")
+
+
 def load_rural():
     rural_request_body = """
     (
@@ -214,6 +254,15 @@ def load_rural():
         relation["ref"="WAY"]["border_type"="county"]["boundary"="administrative"];
         relation["ref"="WIL"]["border_type"="county"]["boundary"="administrative"];
         relation["ref"="WYA"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="HOL"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="UNI"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="MAD"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="FAY"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="PIC"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="HUR"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="HOC"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="FAI"]["border_type"="county"]["boundary"="administrative"];
+        relation["ref"="DEL"]["border_type"="county"]["boundary"="administrative"];
     );
     out geom;
     """
