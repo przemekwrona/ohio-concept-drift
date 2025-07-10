@@ -15,10 +15,7 @@ numpy = "1.26.4"
 requests = "^2.32.4"
 overpass = "^0.7.2"
 jinja2 = "^3.1.6"
-liac-arff = "2.5.0"
-#arff = "0.9"
-ipykernel = "^6.29.5"
-arfftodataframe = "^1.2"
+csv2arff = "^2.0"
 
 
 [build-system]
