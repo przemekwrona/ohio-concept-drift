@@ -43,14 +43,19 @@ def latex_ohio():
 
 
 def latex_warsaw():
-    warsaw = resources.load_warsaw_surveyss()
-    warsaw.loc[warsaw['travelAggregation'] == 'CITY_BIKE', 'travelAggregation'] = 'BIKE'
-    warsaw.loc[warsaw['travelAggregation'] == 'PRIVATE_BIKE', 'travelAggregation'] = 'BIKE'
-    warsaw.loc[warsaw['travelAggregation'] == 'MIXED_BIKE_AND_OTHER', 'travelAggregation'] = 'BIKE'
-    warsaw.loc[warsaw['travelAggregation'] == 'MIXED_CAR_AND_OTHER', 'travelAggregation'] = 'CAR'
-    warsaw.loc[warsaw['travelAggregation'] == 'PUBLIC_TRANSPORT', 'travelAggregation'] = 'PT'
-    warsaw.loc[warsaw['travelAggregation'] == 'WALKING_ONLY', 'travelAggregation'] = 'WALK'
-    warsaw.loc[warsaw['travelAggregation'] == 'MULTIMODE', 'travelAggregation'] = 'OTHER'
+    warsaw = resources.load_warsaw_surveys_with_district()
+    clazz = 'label'
+    warsaw.loc[warsaw[clazz] == 'CITY_BIKE', clazz] = 'BIKE'
+    warsaw.loc[warsaw[clazz] == 'PRIVATE_BIKE', clazz] = 'BIKE'
+    warsaw.loc[warsaw[clazz] == 'MIXED_BIKE_AND_OTHER', clazz] = 'BIKE'
+    warsaw.loc[warsaw[clazz] == 'MIXED_CAR_AND_OTHER', clazz] = 'CAR'
+    warsaw.loc[warsaw[clazz] == 'PUBLIC_TRANSPORT', clazz] = 'PT'
+    warsaw.loc[warsaw[clazz] == 'WALKING_ONLY', clazz] = 'WALK'
+    warsaw.loc[warsaw[clazz] == 'MULTIMODE', clazz] = 'OTHER'
+    warsaw.loc[warsaw[clazz] == 'BIKE', clazz] = 'BIKE'
+    warsaw.loc[warsaw[clazz] == 'PUBLIC_TRANSPORT', clazz] = 'PT'
+    warsaw.loc[warsaw[clazz] == 'CAR', clazz] = 'CAR'
+    warsaw.loc[warsaw[clazz] == 'OTHER', clazz] = 'OTHER'
 
     grouped_by_region = warsaw.groupby('vistula_bank').agg(number_of_instances_in_region=('travelAggregation', 'count')).reset_index()
     grouped_by_region_and_tmc = warsaw.groupby(['vistula_bank', 'travelAggregation']).agg(number_of_instances=('travelAggregation', 'count')).reset_index()
@@ -73,5 +78,3 @@ def latex_warsaw():
 
     latex = result.to_latex(index=False, float_format="{:.2f}".format)
     print(latex)
-
-    print()
