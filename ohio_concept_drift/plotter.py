@@ -107,11 +107,14 @@ def plot_ohio_state(geodata, column_name, file_name, vmax=None, **kwargs):
         print(f"An error occurred: {e}")
 
 
-def plot_warsaw(geodata, column_name, file_name, vmax=None):
+def plot_warsaw(geodata, column_name, file_name, vmax=None, label=None):
     # Load the GeoJSON file into a GeoDataFrame
 
     if vmax is None:
         vmax = np.max(geodata[column_name])
+
+    if label is None:
+        label = ''
 
     try:
         ohio_state_geometry = geometry.load_ohio_state()
@@ -137,7 +140,7 @@ def plot_warsaw(geodata, column_name, file_name, vmax=None):
         # Plot polygons
         # ohio_cities_geometry[ohio_cities_geometry.geometry.type == 'Polygon'].plot(ax=ax, color='red', edgecolor='black', legend=True)
         ohio_state_scaled_geometry.plot(column=column_name, ax=ax, legend=True, cmap='viridis', vmin=0, vmax=vmax, legend_kwds={
-            'label': "Total Drift Detection",  # Custom label for the colorbar
+            'label': label,  # Custom label for the colorbar
             'orientation': "vertical",  # Position the colorbar horizontally
             'shrink': 0.88,  # Reduce its size
             'pad': 0.01,  # Padding between map and colorbar
@@ -146,7 +149,7 @@ def plot_warsaw(geodata, column_name, file_name, vmax=None):
 
             'aspect': 20,  # Aspect ratio of the colorbar
             'format': '%.0f'  # Format the tick labels (no decimal places)
-        })
+        }, linewidth=.1, edgecolor='black')
 
         # Plot lines
         # ohio_cities_geometry[ohio_cities_geometry.geometry.type == 'LineString'].plot(ax=ax, color='red', linewidth=1, legend=True)
