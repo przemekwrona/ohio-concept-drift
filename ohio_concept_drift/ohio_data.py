@@ -2,6 +2,7 @@ from ohio_concept_drift import resources
 from ohio_concept_drift import geometry
 from ohio_concept_drift import plotter
 import pandas as pd
+import os
 
 
 def ohio_data_frame(drift_results_directory):
