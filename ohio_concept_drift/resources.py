@@ -23,5 +23,5 @@ def load_warsaw_surveys():
     return pd.read_csv('resources/CITIZENS_W1_W2_5_1_1_fixed_merged(in).csv', encoding='ISO-8859-1', sep=';', decimal='.')
 
 
-def load_warsaw_surveyss():
+def load_warsaw_surveys_with_district():
     return pd.read_csv('resources/CITIZENS_W1_W2_5_1_1_fixed_merged(in)_with_vistula_district_and_bank.csv', encoding='UTF-8', sep=';', decimal='.')

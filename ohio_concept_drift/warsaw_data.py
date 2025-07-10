@@ -18,10 +18,10 @@ def warsaw_data_frame():
 def plot_warsaw():
     warsaw_districts = warsaw_data_frame()
 
-    warsaw_surveys = resources.load_warsaw_surveyss()
+    warsaw_surveys = resources.load_warsaw_surveys_with_district()
 
-    grouped_by_district = warsaw_surveys.groupby('district').agg(number_of_instances_in_district=('id_SURVEY', 'count'))
-    grouped_by_vistula_bank = warsaw_surveys.groupby('vistula_bank').agg(number_of_instances_in_vistula_bank=('id_SURVEY', 'count'))
+    grouped_by_district = warsaw_surveys.groupby('district').agg(number_of_instances_in_district=('district', 'count'))
+    grouped_by_vistula_bank = warsaw_surveys.groupby('vistula_bank').agg(number_of_instances_in_vistula_bank=('vistula_bank', 'count'))
 
     warsaw_detected_drift = resources.load_warsaw_detected_drift()
     grouped_detected_drift_by_vistula_bank = warsaw_detected_drift.groupby('region').agg(number_of_drift_detection=('instance_index', 'count'))
@@ -33,7 +33,11 @@ def plot_warsaw():
 
     warsaw_vistula_bank_results['drift_frequency_per_10k'] = 10000 * warsaw_vistula_bank_results['number_of_drift_detection'] / warsaw_vistula_bank_results['number_of_instances_in_vistula_bank']
 
-    plotter.plot_warsaw(warsaw_district_results, column_name='number_of_instances_in_district', file_name='warsaw/number_of_instances_in_district.pdf', vmax=1000)
-    plotter.plot_warsaw(warsaw_vistula_bank_results, column_name='number_of_instances_in_vistula_bank', file_name='warsaw/number_of_instances_in_vistula_bank.pdf', vmax=20000)
-    plotter.plot_warsaw(warsaw_vistula_bank_results, column_name='number_of_drift_detection', file_name='warsaw/number_of_drift_detection_in_vistula_bank.pdf', vmax=20)
-    plotter.plot_warsaw(warsaw_vistula_bank_results, column_name='drift_frequency_per_10k', file_name='warsaw/drift_frequency_per_10k.pdf', vmax=100)
+    plotter.plot_warsaw(warsaw_district_results, column_name='number_of_instances_in_district', file_name='warsaw/number_of_instances_in_district.pdf',
+                        vmax=1000, label='Number of instances')
+    plotter.plot_warsaw(warsaw_vistula_bank_results, column_name='number_of_instances_in_vistula_bank',
+                        file_name='warsaw/number_of_instances_in_vistula_bank.pdf', vmax=10000, label='')
+    plotter.plot_warsaw(warsaw_vistula_bank_results, column_name='number_of_drift_detection', file_name='warsaw/number_of_drift_detection_in_vistula_bank.pdf',
+                        vmax=20, label='Total drift detection')
+    plotter.plot_warsaw(warsaw_vistula_bank_results, column_name='drift_frequency_per_10k', file_name='warsaw/drift_frequency_per_10k.pdf', vmax=100,
+                        label='Total drift detection per 10k instances')
