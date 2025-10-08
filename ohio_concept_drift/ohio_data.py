@@ -35,18 +35,30 @@ def ohio_data_frame(drift_results_directory):
     return ohio_results
 
 
+def load_data_per_eperiment(experiment_name, drift_results_directory, column_name):
+    ohio_results = ohio_data_frame(drift_results_directory)
+
+    ohio_data = (ohio_results[['ML_region', column_name, 'number_of_instances']]
+                 .groupby('ML_region').first().reset_index())
+    ohio_data['10k'] = 10_000 * ohio_data[column_name] / ohio_data['number_of_instances']
+    ohio_data_rename = ohio_data.rename(
+        columns={column_name: experiment_name, '10k': f'{experiment_name}_10k', 'number_of_instances': f'{experiment_name}_total'})
+
+    return ohio_data_rename[['ML_region', experiment_name, f'{experiment_name}_total', f'{experiment_name}_10k']]
+
+
 def plot_ohio(experiment_name, drift_results_directory):
     if not os.path.exists(f"ohio/{experiment_name}/"):
         os.makedirs(f"ohio/{experiment_name}/")
 
     ohio_results = ohio_data_frame(drift_results_directory)
 
-    plotter.plot_ohio_state(ohio_results, column_name='total_drift_detection', file_name=f"ohio/{experiment_name}/number_of_detection.pdf", vmax=20, step=5,
-                            is_gt_showed=True, label='Total Drift Detection')
+    plotter.plot_ohio_state(ohio_results, column_name='total_drift_detection', file_name=f"ohio/{experiment_name}/number_of_detection.pdf", vmax=12, step=3,
+                            is_gt_showed=True, label='Number of Drift Detection')
     plotter.plot_ohio_state(ohio_results, column_name='number_of_instances', file_name=f"ohio/{experiment_name}/number_of_instances.pdf", vmax=20000, step=5000,
                             label='Number of instances')
-    plotter.plot_ohio_state(ohio_results, column_name='drift_frequency_per_10k', file_name=f"ohio/{experiment_name}/drift_frequency_per_10k.pdf", vmax=20,
-                            step=5, is_gt_showed=True, label='Total Drift Detection per 10k instances')
+    plotter.plot_ohio_state(ohio_results, column_name='drift_frequency_per_10k', file_name=f"ohio/{experiment_name}/drift_frequency_per_10k.pdf", vmax=12,
+                            step=3, is_gt_showed=True, label='Number of Detection per 10k instances')
     plotter.plot_ohio_state(ohio_results, column_name='first_occurrence_index', file_name=f"ohio/{experiment_name}/first_occurrence_ratio.pdf", vmax=140000,
                             step=20000, label='First drift detection')
     plotter.plot_ohio_state(ohio_results, column_name='last_occurrence_index', file_name=f"ohio/{experiment_name}/last_occurrence_ratio.pdf", vmax=140000,
