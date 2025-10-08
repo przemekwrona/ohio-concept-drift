@@ -29,18 +29,18 @@ def plot_ohio_state(geodata, column_name, file_name, vmax=None, **kwargs):
         max_tick = ticks[-1].astype(float)
 
         gdf_plot = geodata.plot(column=column_name, ax=ax, vmax=max_tick, legend=False,
-                                                   # legend_kwds={
-                                                   #     'label': label,  # Custom label for the colorbar
-                                                   #     'orientation': "vertical",  # Position the colorbar horizontally
-                                                   #     'shrink': 0.88,  # Reduce its size
-                                                   #     'pad': 0.01,  # Padding between map and colorbar
-                                                   #     # 'anchor': (0.0, 0.0),  # Anchor point for positioning (x, y) relative to axes
-                                                   #     # 'bbox_to_anchor': (1.02, 0.5),  # Position slightly outside the right edge
-                                                   #
-                                                   #     'aspect': 20,  # Aspect ratio of the colorbar
-                                                   #     'format': '%.0f'  # Format the tick labels (no decimal places)
-                                                   # },
-                                                   linewidth=.1, edgecolor='black')
+                                # legend_kwds={
+                                #     'label': label,  # Custom label for the colorbar
+                                #     'orientation': "vertical",  # Position the colorbar horizontally
+                                #     'shrink': 0.88,  # Reduce its size
+                                #     'pad': 0.01,  # Padding between map and colorbar
+                                #     # 'anchor': (0.0, 0.0),  # Anchor point for positioning (x, y) relative to axes
+                                #     # 'bbox_to_anchor': (1.02, 0.5),  # Position slightly outside the right edge
+                                #
+                                #     'aspect': 20,  # Aspect ratio of the colorbar
+                                #     'format': '%.0f'  # Format the tick labels (no decimal places)
+                                # },
+                                linewidth=.1, edgecolor='black')
 
         # Get the colorbar and replace tick labels
         sm = plt.cm.ScalarMappable(cmap='viridis', norm=plt.Normalize(vmin=0, vmax=max_tick))
@@ -105,6 +105,67 @@ def plot_ohio_state(geodata, column_name, file_name, vmax=None, **kwargs):
         print("Error: 'my_plot_data.geojson' not found.")
     except Exception as e:
         print(f"An error occurred: {e}")
+
+
+def plot_usa_states(geodata, column_name, file_name, vmax=None, **kwargs):
+    real_max = np.max(geodata[column_name])
+    vmax = vmax if vmax is not None else real_max
+
+    label = kwargs.get('label') if kwargs.get('label') is not None else ''
+    step = kwargs.get('step') if kwargs.get('step') is not None else vmax / 10
+    is_gt_showed = kwargs.get('is_gt_showed') if kwargs.get('is_gt_showed') is not None else False
+
+    # Plotting different geometry types with different styles
+    fig, ax = plt.subplots(1, 1, figsize=(10, 10))
+
+    # Replace numeric ticks with custom labels
+    ticks = np.arange(0, vmax + step, step)
+    max_tick = ticks[-1].astype(float)
+
+    gdf_plot = geodata.plot(column=column_name, ax=ax, vmax=max_tick, legend=False, linewidth=.1, edgecolor='black')
+
+    # Get the colorbar and replace tick labels
+    sm = plt.cm.ScalarMappable(cmap='viridis', norm=plt.Normalize(vmin=0, vmax=max_tick))
+    sm._A = []  # Hack to prevent warning
+    # cbar = fig.colorbar(sm, ax=ax, fraction=0.033, pad=0.01, shrink=0.97)
+    cbar = fig.colorbar(sm, ax=ax, fraction=0.046, pad=0.01, shrink=0.97)
+
+    cbar.set_ticks(ticks)
+
+    if vmax > 100_000:
+        tick_labels = ticks
+        tick_labels = np.divide(tick_labels, 1000)
+        tick_labels = tick_labels.astype(int)
+        tick_labels = tick_labels.astype(str)
+        tick_labels = [f"{tick}k" for tick in tick_labels]
+    else:
+        tick_labels = ticks.astype(str)
+
+    if is_gt_showed:
+        tick_labels[-1] = f">{tick_labels[-1]}"
+
+    cbar.set_ticklabels(tick_labels)
+
+    # Optional: set colorbar label
+    cbar.set_label(label, fontsize=12)
+
+    # ax.set_xlim(-180.0, -60.0)
+    ax.set_xlim(-130.0, -65.0)
+    ax.set_ylim(15.0, 60.0)
+
+    # Set font size for x and y labels
+    ax.set_xlabel('Longitude', fontsize=14)
+    ax.set_ylabel('Latitude', fontsize=14)
+
+    # Set font size for tick labels (x-axis and y-axis ticks)
+    ax.tick_params(axis='x', labelsize=14)
+    ax.tick_params(axis='y', labelsize=14)
+
+    plt.grid(True)
+
+    plt.show()
+
+    fig.savefig(file_name, bbox_inches='tight')
 
 
 def plot_warsaw(geodata, column_name, file_name, vmax=None, label=None):
