@@ -28,7 +28,7 @@ def plot_ohio_state(geodata, column_name, file_name, vmax=None, **kwargs):
         ticks = np.arange(0, vmax + step, step)
         max_tick = ticks[-1].astype(float)
 
-        gdf_plot = ohio_state_geometry.plot(column=column_name, ax=ax, vmax=max_tick, legend=False,
+        gdf_plot = geodata.plot(column=column_name, ax=ax, vmax=max_tick, legend=False,
                                                    # legend_kwds={
                                                    #     'label': label,  # Custom label for the colorbar
                                                    #     'orientation': "vertical",  # Position the colorbar horizontally
