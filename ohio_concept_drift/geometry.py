@@ -288,6 +288,12 @@ def ohio_cites_geopandas():
     return ohio_cities
 
 
+def usa_states_geopandas():
+    usa_states = load_geoframe("resources/usa/us-states.json")
+
+    return usa_states
+
+
 def warsaw_districts_geopandas():
     warsaw_districts = load_geoframe("resources/warsaw/warszawa-dzielnice.geojson")
 

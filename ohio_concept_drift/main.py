@@ -1,6 +1,6 @@
 import pandas
 
-from ohio_concept_drift.ohio_data import plot_ohio, load_data_per_eperiment
+from ohio_concept_drift.ohio_data import plot_ohio, load_data_per_eperiment, plot_usa
 from ohio_concept_drift.warsaw_data import plot_warsaw
 from ohio_concept_drift.latex import latex_ohio, latex_warsaw
 from ohio_concept_drift.warsaw_arff import arff_warsaw_surveys
@@ -18,6 +18,10 @@ def task_plot_ohio():
     plot_ohio('HT_HDDM_ONESIDED', 'experiments/Ohio/Eksperyment 4/HT_HDDM_ONESIDED')
 
     plot_ohio('ARF_HDDM_ONESIDED', 'experiments/Ohio/ARF_HDDM_ONESIDED')
+
+
+def task_plot_usa():
+    plot_usa('', '')
 
 
 def task_prepare_latex_table():
@@ -86,7 +90,8 @@ def task_prepare_latex_table():
     latex_code = latex_code.replace('& 0 &', '& \\textbf{0} &')
     latex_code = latex_code.replace('& 0.00 &', '& \\textbf{0.00} &')
     latex_code = latex_code.replace('& 0.00 \\', '& \\textbf{0.00} \\')
-    latex_code = latex_code.replace('01 TOLEDO02 LIMA03 DAYTON04 SPRINGFIELD05 AKRON06 CANTON07 MANSFIELD08 STEUBENVILLE09 YOUNGSTOWN10 RURAL', '\\textbf{Total}')
+    latex_code = latex_code.replace('01 TOLEDO02 LIMA03 DAYTON04 SPRINGFIELD05 AKRON06 CANTON07 MANSFIELD08 STEUBENVILLE09 YOUNGSTOWN10 RURAL',
+                                    '\\textbf{Total}')
 
     latex_code = latex_code.replace('ML_region', 'Region')
     latex_code = latex_code.replace('HAT_ADWIN & HAT_ADWIN_10k', '\multicolumn{2}{c|}{\makecell{HAT \\\\ ADWIN}}')
@@ -115,6 +120,7 @@ def task_warsaw_arff():
     arff_warsaw_surveys()
 
 
+task_plot_usa()
 # task_warsaw_arff()
 
 # task_plot_ohio()
