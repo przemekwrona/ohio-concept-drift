@@ -1,9 +1,11 @@
 import pandas
+import numpy as np
 
-from ohio_concept_drift.ohio_data import plot_ohio, load_data_per_eperiment, plot_usa
+from ohio_concept_drift.ohio_data import plot_ohio, load_ohio_data_per_experiment, plot_usa, load_usa_data_per_experiment
 from ohio_concept_drift.warsaw_data import plot_warsaw
-from ohio_concept_drift.latex import latex_ohio, latex_warsaw
+from ohio_concept_drift.latex import latex_ohio, latex_warsaw, latex_usa
 from ohio_concept_drift.warsaw_arff import arff_warsaw_surveys
+from ohio_concept_drift.usa.dictionary import USA_STATES_CODES
 
 
 def task_plot_ohio():
@@ -24,21 +26,21 @@ def task_plot_usa():
     plot_usa('', '')
 
 
-def task_prepare_latex_table():
+def task_prepare_latex_ohio_table():
     column_name = 'total_drift_detection'
-    NB_ADWIN = load_data_per_eperiment('NB_ADWIN', 'experiments/Ohio/Eksperyment 2 NB ADWIN HDDM pełne przebiegi/Eksperyment_2/NB_ADWIN', column_name)
-    NB_HDDM_ONESIDED = load_data_per_eperiment('NB_HDDM_ONESIDED',
+    NB_ADWIN = load_ohio_data_per_experiment('NB_ADWIN', 'experiments/Ohio/Eksperyment 2 NB ADWIN HDDM pełne przebiegi/Eksperyment_2/NB_ADWIN', column_name)
+    NB_HDDM_ONESIDED = load_ohio_data_per_experiment('NB_HDDM_ONESIDED',
                                                'experiments/Ohio/Eksperyment 2 NB ADWIN HDDM pełne przebiegi/Eksperyment_2/NB_HDDM_ONESIDED', column_name)
 
-    SRP_HDDM_ONESIDED = load_data_per_eperiment('SRP_HDDM_ONESIDED', 'experiments/Ohio/Eksperyment 3 SRP HDDM pełne przeliczenie/SRP_HDDM_ONESIDED',
-                                                column_name)
+    SRP_HDDM_ONESIDED = load_ohio_data_per_experiment('SRP_HDDM_ONESIDED', 'experiments/Ohio/Eksperyment 3 SRP HDDM pełne przeliczenie/SRP_HDDM_ONESIDED',
+                                                      column_name)
 
-    ARF_ADWIN = load_data_per_eperiment('ARF_ADWIN', 'experiments/Ohio/Eksperyment 4/ARF_ADWIN', column_name)
-    HAT_ADWIN = load_data_per_eperiment('HAT_ADWIN', 'experiments/Ohio/Eksperyment 4/HAT_ADWIN', column_name)
-    HT_ADWIN = load_data_per_eperiment('HT_ADWIN', 'experiments/Ohio/Eksperyment 4/HT_ADWIN', column_name)
-    HT_HDDM_ONESIDED = load_data_per_eperiment('HT_HDDM_ONESIDED', 'experiments/Ohio/Eksperyment 4/HT_HDDM_ONESIDED', column_name)
+    ARF_ADWIN = load_ohio_data_per_experiment('ARF_ADWIN', 'experiments/Ohio/Eksperyment 4/ARF_ADWIN', column_name)
+    HAT_ADWIN = load_ohio_data_per_experiment('HAT_ADWIN', 'experiments/Ohio/Eksperyment 4/HAT_ADWIN', column_name)
+    HT_ADWIN = load_ohio_data_per_experiment('HT_ADWIN', 'experiments/Ohio/Eksperyment 4/HT_ADWIN', column_name)
+    HT_HDDM_ONESIDED = load_ohio_data_per_experiment('HT_HDDM_ONESIDED', 'experiments/Ohio/Eksperyment 4/HT_HDDM_ONESIDED', column_name)
 
-    ARF_HDDM_ONESIDED = load_data_per_eperiment('ARF_HDDM_ONESIDED', 'experiments/Ohio/ARF_HDDM_ONESIDED', column_name)
+    ARF_HDDM_ONESIDED = load_ohio_data_per_experiment('ARF_HDDM_ONESIDED', 'experiments/Ohio/ARF_HDDM_ONESIDED', column_name)
 
     results = pandas.merge(NB_ADWIN, NB_HDDM_ONESIDED, on="ML_region")
     results = pandas.merge(results, SRP_HDDM_ONESIDED, on="ML_region")
@@ -107,20 +109,98 @@ def task_prepare_latex_table():
         f.write(latex_code)
 
 
+def task_prepare_latex_usa_table():
+    column_name = 'total_drift_detection'
+    # NB_ADWIN = load_data_per_eperiment('NB_ADWIN', 'experiments/Ohio/Eksperyment 2 NB ADWIN HDDM pełne przebiegi/Eksperyment_2/NB_ADWIN', column_name)
+    # NB_HDDM_ONESIDED = load_data_per_eperiment('NB_HDDM_ONESIDED',
+    #                                            'experiments/Ohio/Eksperyment 2 NB ADWIN HDDM pełne przebiegi/Eksperyment_2/NB_HDDM_ONESIDED', column_name)
+    #
+    # SRP_HDDM_ONESIDED = load_data_per_eperiment('SRP_HDDM_ONESIDED', 'experiments/Ohio/Eksperyment 3 SRP HDDM pełne przeliczenie/SRP_HDDM_ONESIDED',
+    #                                             column_name)
+    #
+    # ARF_ADWIN = load_data_per_eperiment('ARF_ADWIN', 'experiments/Ohio/Eksperyment 4/ARF_ADWIN', column_name)
+    # HAT_ADWIN = load_data_per_eperiment('HAT_ADWIN', 'experiments/Ohio/Eksperyment 4/HAT_ADWIN', column_name)
+    # HT_ADWIN = load_data_per_eperiment('HT_ADWIN', 'experiments/Ohio/Eksperyment 4/HT_ADWIN', column_name)
+    # HT_HDDM_ONESIDED = load_data_per_eperiment('HT_HDDM_ONESIDED', 'experiments/Ohio/Eksperyment 4/HT_HDDM_ONESIDED', column_name)
+
+    ARF_HDDM_ONESIDED = load_usa_data_per_experiment('ARF_HDDM_ONESIDED', 'experiments/usa/ARF_HDDM_ONESIDED/ARF_HDDM_ONESIDED_drift_log.csv', column_name)
+
+    results = ARF_HDDM_ONESIDED
+    # results = pandas.merge(NB_ADWIN, NB_HDDM_ONESIDED, on="ML_region")
+    # results = pandas.merge(results, SRP_HDDM_ONESIDED, on="ML_region")
+    # results = pandas.merge(results, ARF_ADWIN, on="ML_region")
+    # results = pandas.merge(results, HAT_ADWIN, on="ML_region")
+    # results = pandas.merge(results, HT_ADWIN, on="ML_region")
+    # results = pandas.merge(results, HT_HDDM_ONESIDED, on="ML_region")
+    # results = pandas.merge(results, ARF_HDDM_ONESIDED, on="ML_region")
+
+    results.loc['Total'] = results.sum()
+
+    # results['NB_ADWIN_10k'] = 10_000 * results['NB_ADWIN'] / results['NB_ADWIN_total']
+    # results['NB_HDDM_ONESIDED_10k'] = 10_000 * results['NB_HDDM_ONESIDED'] / results['NB_HDDM_ONESIDED_total']
+    # results['SRP_HDDM_ONESIDED_10k'] = 10_000 * results['SRP_HDDM_ONESIDED'] / results['SRP_HDDM_ONESIDED_total']
+    # results['ARF_ADWIN_10k'] = 10_000 * results['ARF_ADWIN'] / results['ARF_ADWIN_total']
+    # results['HAT_ADWIN_10k'] = 10_000 * results['HAT_ADWIN'] / results['HAT_ADWIN_total']
+    # results['HT_ADWIN_10k'] = 10_000 * results['HT_ADWIN'] / results['HT_ADWIN_total']
+    # results['HT_HDDM_ONESIDED_10k'] = 10_000 * results['HT_HDDM_ONESIDED'] / results['HT_HDDM_ONESIDED_total']
+    results['ARF_HDDM_ONESIDED_10k'] = np.where(results['ARF_HDDM_ONESIDED_total'] > 0, 10_000 * results['ARF_HDDM_ONESIDED'] / results['ARF_HDDM_ONESIDED_total'], 0)
+
+    results = results[['ML_region',
+                       # 'HAT_ADWIN', 'HAT_ADWIN_10k',
+                       # 'HT_ADWIN', 'HT_ADWIN_10k',
+                       # 'ARF_ADWIN', 'ARF_ADWIN_10k',
+                       # 'NB_ADWIN', 'NB_ADWIN_10k',
+                       # 'NB_HDDM_ONESIDED', 'NB_HDDM_ONESIDED_10k',
+                       # 'SRP_HDDM_ONESIDED', 'SRP_HDDM_ONESIDED_10k',
+                       # 'HT_HDDM_ONESIDED', 'HT_HDDM_ONESIDED_10k',
+                       'ARF_HDDM_ONESIDED', 'ARF_HDDM_ONESIDED_10k'
+                       ]]
+
+    results['ML_region'] = results['ML_region'].map(USA_STATES_CODES).str.upper()
+
+
+    latex_code = results.to_latex(
+        index=False,
+        caption="The aggregate number of concept drift instances identified using the designated algorithm.",
+        label=f'tab:{column_name}',
+        float_format="%.2f"  # Format floats to 2 decimal places
+    )
+
+    latex_code = latex_code.replace('& 0 &', '& \\textbf{0} &')
+    latex_code = latex_code.replace('& 0.00 &', '& \\textbf{0.00} &')
+    latex_code = latex_code.replace('& 0.00 \\', '& \\textbf{0.00} \\')
+
+    latex_code = latex_code.replace('ML_region', 'Region')
+    latex_code = latex_code.replace('HAT_ADWIN & HAT_ADWIN_10k', '\multicolumn{2}{c|}{\makecell{HAT \\\\ ADWIN}}')
+    latex_code = latex_code.replace('HT_ADWIN & HT_ADWIN_10k', '\multicolumn{2}{c|}{\makecell{HT \\\\ ADWIN}}')
+    latex_code = latex_code.replace('ARF_ADWIN & ARF_ADWIN_10k', '\multicolumn{2}{c|}{\makecell{ARF \\\\ ADWIN}}')
+    latex_code = latex_code.replace('NB_ADWIN & NB_ADWIN_10k', '\multicolumn{2}{c|}{\makecell{NB \\\\ ADWIN}}')
+    latex_code = latex_code.replace('NB_HDDM_ONESIDED & NB_HDDM_ONESIDED_10k', '\multicolumn{2}{c|}{\makecell{NB HDDM \\\\ ONESIDED}}')
+    latex_code = latex_code.replace('SRP_HDDM_ONESIDED & SRP_HDDM_ONESIDED_10k', '\multicolumn{2}{c|}{\makecell{SRP HDDM \\\\ ONESIDED}}')
+    latex_code = latex_code.replace('HT_HDDM_ONESIDED & HT_HDDM_ONESIDED_10k', '\multicolumn{2}{c|}{\makecell{HT HDDM \\\\ ONESIDED}}')
+    latex_code = latex_code.replace('ARF_HDDM_ONESIDED & ARF_HDDM_ONESIDED_10k', '\multicolumn{2}{c|}{\makecell{ARF HDDM \\\\ ONESIDED}}')
+
+    with open(f'usa/{column_name}_tab_summary.tex', "w") as f:
+        f.write(latex_code)
+
+
 def task_plot_warsaw():
     plot_warsaw()
 
 
-def task_ohio_latex():
-    latex_warsaw()
-    latex_ohio()
+def task_basic_statistic_latex():
+    # latex_warsaw()
+    # latex_ohio()
+    latex_usa()
 
 
 def task_warsaw_arff():
     arff_warsaw_surveys()
 
 
-task_plot_usa()
+task_prepare_latex_usa_table()
+# task_basic_statistic_latex()
+# task_plot_usa()
 # task_warsaw_arff()
 
 # task_plot_ohio()

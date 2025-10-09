@@ -3,6 +3,7 @@ from ohio_concept_drift import geometry
 from ohio_concept_drift import plotter
 import pandas as pd
 import os
+import numpy as np
 
 
 def load_drift_results(arff_dataset, detected_drift, regions):
@@ -23,10 +24,11 @@ def load_drift_results(arff_dataset, detected_drift, regions):
     ohio_results['number_of_instances'] = ohio_results['number_of_instances'].fillna(0)
     ohio_results['first_occurrence_index'] = ohio_results['first_occurrence_index'].fillna(0)
     ohio_results['last_occurrence_index'] = ohio_results['last_occurrence_index'].fillna(0)
+    np.where(ohio_results['number_of_instances'] > 0, 10000 * ohio_results['total_drift_detection'] / ohio_results['number_of_instances'], 0)
 
-    ohio_results['drift_frequency_per_10k'] = 10000 * ohio_results['total_drift_detection'] / ohio_results['number_of_instances']
-    ohio_results['first_occurrence_ratio'] = 100 * ohio_results['first_occurrence_index'] / ohio_results['number_of_instances']
-    ohio_results['last_occurrence_ratio'] = 100 * ohio_results['last_occurrence_index'] / ohio_results['number_of_instances']
+    ohio_results['drift_frequency_per_10k'] = np.where(ohio_results['number_of_instances'] > 0, 10000 * ohio_results['total_drift_detection'] / ohio_results['number_of_instances'], 0)
+    ohio_results['first_occurrence_ratio'] = np.where(ohio_results['number_of_instances'] > 0, 10000 * ohio_results['first_occurrence_index'] / ohio_results['number_of_instances'], 0)
+    ohio_results['last_occurrence_ratio'] = np.where(ohio_results['number_of_instances'] > 0, 10000 * ohio_results['last_occurrence_index'] / ohio_results['number_of_instances'], 0)
 
     return ohio_results
 
@@ -38,22 +40,33 @@ def ohio_data_frame(drift_results_directory):
     return load_drift_results(arff_dataset=ohio_dataset, detected_drift=detected_drift, regions=ohio_cities)
 
 
-def usa_data_frame(drift_results_directory):
+def usa_data_frame(drift_results_path):
     usa_dataset = resources.load_usa_arff()
-    detected_drift = pd.DataFrame({'region': [], 'drift_type': [], 'instance_index': []})
-
+    detected_drift = resources.load_detected_drift(drift_results_path)
     usa_states = geometry.usa_states_geopandas()
 
     return load_drift_results(arff_dataset=usa_dataset, detected_drift=detected_drift, regions=usa_states)
 
 
-def load_data_per_eperiment(experiment_name, drift_results_directory, column_name):
+def load_ohio_data_per_experiment(experiment_name, drift_results_directory, column_name):
     ohio_results = ohio_data_frame(drift_results_directory)
 
     ohio_data = (ohio_results[['ML_region', column_name, 'number_of_instances']]
                  .groupby('ML_region').first().reset_index())
     ohio_data['10k'] = 10_000 * ohio_data[column_name] / ohio_data['number_of_instances']
     ohio_data_rename = ohio_data.rename(
+        columns={column_name: experiment_name, '10k': f'{experiment_name}_10k', 'number_of_instances': f'{experiment_name}_total'})
+
+    return ohio_data_rename[['ML_region', experiment_name, f'{experiment_name}_total', f'{experiment_name}_10k']]
+
+
+def load_usa_data_per_experiment(experiment_name, drift_results_file, column_name):
+    usa_results = usa_data_frame(drift_results_file)
+
+    usa_data = (usa_results[['ML_region', column_name, 'number_of_instances']]
+                 .groupby('ML_region').first().reset_index())
+    usa_data['10k'] = np.where(usa_data['number_of_instances'] > 0, 10_000 * usa_data[column_name] / usa_data['number_of_instances'], 0)
+    ohio_data_rename = usa_data.rename(
         columns={column_name: experiment_name, '10k': f'{experiment_name}_10k', 'number_of_instances': f'{experiment_name}_total'})
 
     return ohio_data_rename[['ML_region', experiment_name, f'{experiment_name}_total', f'{experiment_name}_10k']]
