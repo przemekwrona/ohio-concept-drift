@@ -2,7 +2,6 @@ import pandas as pd
 from scipy.io import arff
 
 OHIO_PATH = 'resources/AllOhioDataSorted_2.arff'
-OHIO_DRIFT_PATH = 'resources/drift_log.csv'
 
 USA_PATH = 'resources/NHTSDataSorted.arff'
 
@@ -19,8 +18,12 @@ def load_usa_arff():
     return pd.DataFrame(data)
 
 
+def load_detected_drift(drift_path):
+    return pd.read_csv(drift_path)
+
+
 def load_ohio_detected_drift(drift_results_directory):
-    return pd.read_csv(f"{drift_results_directory}/drift_log.csv")
+    return load_detected_drift(f"{drift_results_directory}/drift_log.csv")
 
 
 def load_warsaw_detected_drift():
