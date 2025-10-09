@@ -163,6 +163,42 @@ def plot_usa_states(geodata, column_name, file_name, vmax=None, **kwargs):
 
     plt.grid(True)
 
+    for idx, row in geodata.iterrows():
+        point = row['geometry'].centroid
+        text = row['ML_region'][:2]
+
+        x = point.x
+        y = point.y
+
+        if text == 'FL':
+            x = x + 0.7
+        if text == 'NY':
+            x = x + 0.7
+        if text == 'NH':
+            y = y - 0.5
+        if text == 'CT':
+            y = y + 0.5
+        if text == 'DE':
+            x = x + 0.5
+        if text == 'MD':
+            y = y + 0.4
+        if text == 'DC':
+            y = y - 0.4
+
+        font_size = 11
+
+        # if text == 'DE':
+        #     font_size = 8
+        # if text == 'MD':
+        #     font_size = 8
+        # if text == 'DC':
+        #     font_size = 8
+
+        if 2 * row[column_name] < vmax:
+            ax.annotate(text, xy=(x, y), horizontalalignment='center', fontsize=font_size, color='white')
+        else:
+            ax.annotate(row['ML_region'][:2], xy=(x, y), horizontalalignment='center', fontsize=font_size, color='black')
+
     plt.show()
 
     fig.savefig(file_name, bbox_inches='tight')

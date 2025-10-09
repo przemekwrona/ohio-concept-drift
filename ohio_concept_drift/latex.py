@@ -1,4 +1,5 @@
 from ohio_concept_drift import resources
+from ohio_concept_drift.usa.dictionary import USA_STATES_CODES
 import pandas as pd
 
 
@@ -19,8 +20,50 @@ def latex_ohio():
     ohio_arff.loc[ohio_arff['label'] == '97.0', 'label'] = 'OTHER'  # Other (specify)
     ohio_arff.loc[ohio_arff['label'] == '99.0', 'label'] = 'OTHER'  # DK/RF
 
-    grouped_by_region = ohio_arff.groupby('ML_region').agg(number_of_instances_in_region=('label', 'count')).reset_index()
-    grouped_by_region_and_tmc = ohio_arff.groupby(['ML_region', 'label']).agg(number_of_instances=('label', 'count')).reset_index()
+    latex_summary(arff_data=ohio_arff)
+
+
+def latex_usa():
+    usa_arff = resources.load_usa_arff()
+    usa_arff['ML_region'] = usa_arff['ML_region'].str.decode('utf-8')
+    usa_arff['label'] = usa_arff['label'].str.decode('utf-8')
+
+    usa_arff.loc[usa_arff['label'] == '-7', 'label'] = 'BIKE'
+    usa_arff.loc[usa_arff['label'] == '-8', 'label'] = 'WALK'
+    usa_arff.loc[usa_arff['label'] == '-9', 'label'] = 'WALK'
+    usa_arff.loc[usa_arff['label'] == '1', 'label'] = 'CAR'
+    usa_arff.loc[usa_arff['label'] == '2', 'label'] = 'CAR'
+    usa_arff.loc[usa_arff['label'] == '3', 'label'] = 'CAR'
+    usa_arff.loc[usa_arff['label'] == '4', 'label'] = 'CAR'
+    usa_arff.loc[usa_arff['label'] == '5', 'label'] = 'CAR'
+    usa_arff.loc[usa_arff['label'] == '6', 'label'] = 'CAR'
+    usa_arff.loc[usa_arff['label'] == '7', 'label'] = 'CAR'
+    usa_arff.loc[usa_arff['label'] == '8', 'label'] = 'CAR'
+    usa_arff.loc[usa_arff['label'] == '9', 'label'] = 'CAR'
+    usa_arff.loc[usa_arff['label'] == '10', 'label'] = 'CAR'
+    usa_arff.loc[usa_arff['label'] == '11', 'label'] = 'CAR'
+    usa_arff.loc[usa_arff['label'] == '12', 'label'] = 'CAR'
+    usa_arff.loc[usa_arff['label'] == '13', 'label'] = 'CAR'
+    usa_arff.loc[usa_arff['label'] == '14', 'label'] = 'CAR'
+    usa_arff.loc[usa_arff['label'] == '15', 'label'] = 'CAR'
+    usa_arff.loc[usa_arff['label'] == '16', 'label'] = 'CAR'
+    usa_arff.loc[usa_arff['label'] == '17', 'label'] = 'PT'
+    usa_arff.loc[usa_arff['label'] == '18', 'label'] = 'PT'
+    usa_arff.loc[usa_arff['label'] == '19', 'label'] = 'PT'
+    usa_arff.loc[usa_arff['label'] == '20', 'label'] = 'WALK'
+    usa_arff.loc[usa_arff['label'] == '97', 'label'] = 'OTHER'
+
+    usa_arff['ML_region'] = usa_arff['ML_region'].map(USA_STATES_CODES)
+
+    latex_summary(arff_data=usa_arff)
+
+
+def latex_summary(arff_data):
+    # arff_data['ML_region'] = arff_data['ML_region'].str.decode('utf-8')
+    # arff_data['label'] = arff_data['label'].str.decode('utf-8')
+
+    grouped_by_region = arff_data.groupby('ML_region').agg(number_of_instances_in_region=('label', 'count')).reset_index()
+    grouped_by_region_and_tmc = arff_data.groupby(['ML_region', 'label']).agg(number_of_instances=('label', 'count')).reset_index()
     pivoted = grouped_by_region_and_tmc.pivot(index='ML_region', columns='label', values='number_of_instances').reset_index()
 
     result = pd.merge(grouped_by_region, pivoted, on='ML_region', how='left')
@@ -37,6 +80,22 @@ def latex_ohio():
 
     result = result[['ML_region', 'number_of_instances_in_region', 'CAR', 'car_ratio', 'PT', 'pt_ratio', 'WALK', 'walk_ratio', 'BIKE', 'bike_ratio', 'OTHER',
                      'other_ratio']]
+
+    result['number_of_instances_in_region'] = result['number_of_instances_in_region'].astype(int)
+    result['CAR'] = result['CAR'].fillna(0)
+    result['CAR'] = result['CAR'].astype(int)
+
+    result['PT'] = result['PT'].fillna(0)
+    result['PT'] = result['PT'].astype(int)
+
+    result['WALK'] = result['WALK'].fillna(0)
+    result['WALK'] = result['WALK'].astype(int)
+
+    result['BIKE'] = result['BIKE'].fillna(0)
+    result['BIKE'] = result['BIKE'].astype(int)
+
+    result['OTHER'] = result['OTHER'].fillna(0)
+    result['OTHER'] = result['OTHER'].astype(int)
 
     latex = result.to_latex(index=False, float_format="{:.2f}".format)
     print(latex)
