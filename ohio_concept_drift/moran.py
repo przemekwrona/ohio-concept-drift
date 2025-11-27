@@ -114,6 +114,8 @@ def build_latex(results):
     latex = latex.replace('LH', '\cellcolor{cyan}{\color{white}LH}')
     latex = latex.replace('LL', '\cellcolor{blue}{\color{white}LH}')
 
+    latex = latex.replace('\\bottomrule', '')
+
     return latex
 
 

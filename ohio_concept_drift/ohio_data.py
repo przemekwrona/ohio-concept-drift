@@ -35,14 +35,14 @@ def load_drift_results(arff_dataset, detected_drift, regions):
 
 def ohio_data_frame(drift_results_directory):
     ohio_dataset = resources.load_ohio_arff()
-    detected_drift = resources.load_ohio_detected_drift(drift_results_directory)
+    detected_drift = resources.load_detected_drift_by_directory(drift_results_directory)
     ohio_cities = geometry.ohio_cites_geopandas()
     return load_drift_results(arff_dataset=ohio_dataset, detected_drift=detected_drift, regions=ohio_cities)
 
 
-def usa_data_frame(drift_results_path):
+def usa_data_frame(drift_results_directory):
     usa_dataset = resources.load_usa_arff()
-    detected_drift = resources.load_detected_drift(drift_results_path)
+    detected_drift = resources.load_detected_drift_by_directory(drift_results_directory)
     usa_states = geometry.usa_states_geopandas()
 
     return load_drift_results(arff_dataset=usa_dataset, detected_drift=detected_drift, regions=usa_states)
@@ -90,19 +90,19 @@ def plot_ohio(experiment_name, drift_results_directory):
                             step=20000, label='Last drift detection')
 
 
-def plot_usa(experiment_name, drift_results_directory):
-    # if not os.path.exists(f"usa/{experiment_name}/"):
-    #     os.makedirs(f"ohio/{experiment_name}/")
+def plot_usa(experiment_name, drift_results_path):
+    if not os.path.exists(f"usa/{experiment_name}/"):
+        os.makedirs(f"usa/{experiment_name}/")
 
-    usa_results = usa_data_frame(drift_results_directory)
+    usa_results = usa_data_frame(drift_results_path)
 
-    # plotter.plot_ohio_state(ohio_results, column_name='total_drift_detection', file_name=f"ohio/{experiment_name}/number_of_detection.pdf", vmax=12, step=3,
-    #                         is_gt_showed=True, label='Number of Drift Detection')
-    plotter.plot_usa_states(usa_results, column_name='number_of_instances', file_name=f"usa/number_of_instances.pdf", vmax=200_000, step=25_000,
+    plotter.plot_usa_states(usa_results, column_name='total_drift_detection', file_name=f"usa/{experiment_name}/number_of_detection.pdf", vmax=12, step=3,
+                            is_gt_showed=True, label='Number of Drift Detection')
+    plotter.plot_usa_states(usa_results, column_name='number_of_instances', file_name=f"usa/{experiment_name}/number_of_instances.pdf", vmax=20000, step=5000,
                             label='Number of instances')
-    # plotter.plot_ohio_state(ohio_results, column_name='drift_frequency_per_10k', file_name=f"ohio/{experiment_name}/drift_frequency_per_10k.pdf", vmax=12,
-    #                         step=3, is_gt_showed=True, label='Number of Detection per 10k instances')
-    # plotter.plot_ohio_state(ohio_results, column_name='first_occurrence_index', file_name=f"ohio/{experiment_name}/first_occurrence_ratio.pdf", vmax=140000,
-    #                         step=20000, label='First drift detection')
-    # plotter.plot_ohio_state(ohio_results, column_name='last_occurrence_index', file_name=f"ohio/{experiment_name}/last_occurrence_ratio.pdf", vmax=140000,
-    #                         step=20000, label='Last drift detection')
+    plotter.plot_usa_states(usa_results, column_name='drift_frequency_per_10k', file_name=f"usa/{experiment_name}/drift_frequency_per_10k.pdf", vmax=12,
+                            step=3, is_gt_showed=True, label='Number of Detection per 10k instances')
+    plotter.plot_usa_states(usa_results, column_name='first_occurrence_index', file_name=f"usa/{experiment_name}/first_occurrence_ratio.pdf", vmax=140000,
+                            step=20000, label='First drift detection')
+    plotter.plot_usa_states(usa_results, column_name='last_occurrence_index', file_name=f"usa/{experiment_name}/last_occurrence_ratio.pdf", vmax=140000,
+                            step=20000, label='Last drift detection')
