@@ -11,7 +11,7 @@ def summary_ohio_number_of_detection(results_config, target_directory, column_na
 
     summary_data_frame = summary_number_of_detection(results)
 
-    with open(f'{target_directory}/{column_name}_tab_summary_v2.tex', "w") as f:
+    with open(f'{target_directory}/{column_name}_tab_summary.tex', "w") as f:
         f.write(build_latex(summary_data_frame))
 
 

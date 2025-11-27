@@ -23,7 +23,7 @@ def latex_ohio():
     latex_summary(arff_data=ohio_arff)
 
 
-def latex_usa():
+def summary_usa_data():
     usa_arff = resources.load_usa_arff()
     usa_arff['ML_region'] = usa_arff['ML_region'].str.decode('utf-8')
     usa_arff['label'] = usa_arff['label'].str.decode('utf-8')
@@ -31,7 +31,10 @@ def latex_usa():
     usa_arff['label'] = usa_arff['label'].map(USA_TMC_CODES_2017)
     usa_arff['ML_region'] = usa_arff['ML_region'].map(USA_STATES_CODES).str.upper()
 
-    latex_summary(arff_data=usa_arff)
+    latex = latex_summary(arff_data=usa_arff)
+
+    with open(f'usa/data_summary.tex', 'w', encoding='utf-8') as f:
+        f.write(latex)
 
 
 def latex_summary(arff_data):
@@ -73,8 +76,21 @@ def latex_summary(arff_data):
     result['OTHER'] = result['OTHER'].fillna(0)
     result['OTHER'] = result['OTHER'].astype(int)
 
-    latex = result.to_latex(index=False, float_format="{:.2f}".format)
-    print(latex)
+    latex_results = result.to_latex(index=False, float_format="{:.2f}".format)
+    latex_results = latex_results.replace('ML_region', 'Region')
+    latex_results = latex_results.replace('number_of_instances_in_region', 'card')
+    latex_results = latex_results.replace('CAR & car_ratio', '\multicolumn{2}{c|}{CAR}')
+
+    latex_results = latex_results.replace('PT & pt_ratio', '\multicolumn{2}{c|}{PT}')
+    latex_results = latex_results.replace('WALK & walk_ratio', '\multicolumn{2}{c|}{WALK}')
+    latex_results = latex_results.replace('BIKE & bike_ratio', '\multicolumn{2}{c|}{BIKE}')
+    latex_results = latex_results.replace('OTHER & other_ratio', '\multicolumn{2}{c|}{OTHER}')
+
+    latex_results = latex_results.replace('\\toprule', '\hline')
+    latex_results = latex_results.replace('\\midrule', '\hline')
+    latex_results = latex_results.replace('\\bottomrule', '\hline')
+
+    return latex_results
 
 
 def latex_warsaw():
