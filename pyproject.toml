@@ -16,6 +16,8 @@ requests = "^2.32.4"
 overpass = "^0.7.2"
 jinja2 = "^3.1.6"
 csv2arff = "^2.0"
+pysal = "^23.7"
+esda = "^2.8.0"
 
 
 [build-system]
@@ -23,5 +25,5 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-ohio = "ohio_concept_drift.main:task_plot_ohio"
+ohio = "ohio_concept_drift.main:hi"
 vistula = "ohio_concept_drift.main:district_and_vistula_bank"
