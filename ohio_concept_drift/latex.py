@@ -1,5 +1,5 @@
 from ohio_concept_drift import resources
-from ohio_concept_drift.usa.dictionary import USA_STATES_CODES
+from ohio_concept_drift.usa.dictionary import USA_STATES_CODES, USA_TMC_CODES_2017
 import pandas as pd
 
 
@@ -28,32 +28,8 @@ def latex_usa():
     usa_arff['ML_region'] = usa_arff['ML_region'].str.decode('utf-8')
     usa_arff['label'] = usa_arff['label'].str.decode('utf-8')
 
-    usa_arff.loc[usa_arff['label'] == '-7', 'label'] = 'BIKE'
-    usa_arff.loc[usa_arff['label'] == '-8', 'label'] = 'WALK'
-    usa_arff.loc[usa_arff['label'] == '-9', 'label'] = 'WALK'
-    usa_arff.loc[usa_arff['label'] == '1', 'label'] = 'CAR'
-    usa_arff.loc[usa_arff['label'] == '2', 'label'] = 'CAR'
-    usa_arff.loc[usa_arff['label'] == '3', 'label'] = 'CAR'
-    usa_arff.loc[usa_arff['label'] == '4', 'label'] = 'CAR'
-    usa_arff.loc[usa_arff['label'] == '5', 'label'] = 'CAR'
-    usa_arff.loc[usa_arff['label'] == '6', 'label'] = 'CAR'
-    usa_arff.loc[usa_arff['label'] == '7', 'label'] = 'CAR'
-    usa_arff.loc[usa_arff['label'] == '8', 'label'] = 'CAR'
-    usa_arff.loc[usa_arff['label'] == '9', 'label'] = 'CAR'
-    usa_arff.loc[usa_arff['label'] == '10', 'label'] = 'CAR'
-    usa_arff.loc[usa_arff['label'] == '11', 'label'] = 'CAR'
-    usa_arff.loc[usa_arff['label'] == '12', 'label'] = 'CAR'
-    usa_arff.loc[usa_arff['label'] == '13', 'label'] = 'CAR'
-    usa_arff.loc[usa_arff['label'] == '14', 'label'] = 'CAR'
-    usa_arff.loc[usa_arff['label'] == '15', 'label'] = 'CAR'
-    usa_arff.loc[usa_arff['label'] == '16', 'label'] = 'CAR'
-    usa_arff.loc[usa_arff['label'] == '17', 'label'] = 'PT'
-    usa_arff.loc[usa_arff['label'] == '18', 'label'] = 'PT'
-    usa_arff.loc[usa_arff['label'] == '19', 'label'] = 'PT'
-    usa_arff.loc[usa_arff['label'] == '20', 'label'] = 'WALK'
-    usa_arff.loc[usa_arff['label'] == '97', 'label'] = 'OTHER'
-
-    usa_arff['ML_region'] = usa_arff['ML_region'].map(USA_STATES_CODES)
+    usa_arff['label'] = usa_arff['label'].map(USA_TMC_CODES_2017)
+    usa_arff['ML_region'] = usa_arff['ML_region'].map(USA_STATES_CODES).str.upper()
 
     latex_summary(arff_data=usa_arff)
 
