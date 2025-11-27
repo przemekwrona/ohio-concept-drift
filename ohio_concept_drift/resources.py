@@ -18,12 +18,12 @@ def load_usa_arff():
     return pd.DataFrame(data)
 
 
-def load_detected_drift(drift_path):
+def load_detected_drift_by_path(drift_path):
     return pd.read_csv(drift_path)
 
 
-def load_ohio_detected_drift(drift_results_directory):
-    return load_detected_drift(f"{drift_results_directory}/drift_log.csv")
+def load_detected_drift_by_directory(drift_results_directory):
+    return load_detected_drift_by_path(f"{drift_results_directory}/drift_log.csv")
 
 
 def load_warsaw_detected_drift():
