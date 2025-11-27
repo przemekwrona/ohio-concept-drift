@@ -199,8 +199,6 @@ def plot_usa_states(geodata, column_name, file_name, vmax=None, **kwargs):
         else:
             ax.annotate(row['ML_region'][:2], xy=(x, y), horizontalalignment='center', fontsize=font_size, color='black')
 
-    plt.show()
-
     fig.savefig(file_name, bbox_inches='tight')
 
 
