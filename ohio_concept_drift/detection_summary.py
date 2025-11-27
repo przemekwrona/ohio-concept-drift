@@ -9,17 +9,24 @@ def summary_ohio_number_of_detection(results_config, target_directory, column_na
     results = [(experiment, load_ohio_data_per_experiment(experiment_name=experiment, drift_results_directory=drift_path, column_name=column_name)) for
                experiment, drift_path in results_config]
 
-    summary_number_of_detection(results, target_directory, column_name='total_drift_detection')
+    summary_data_frame = summary_number_of_detection(results)
+
+    with open(f'{target_directory}/{column_name}_tab_summary_v2.tex', "w") as f:
+        f.write(build_latex(summary_data_frame))
 
 
 def summary_usa_number_of_detection(results_config, target_directory, column_name='total_drift_detection'):
     results = [(experiment, load_usa_data_per_experiment(experiment_name=experiment, drift_results_file=drift_path, column_name=column_name)) for
                experiment, drift_path in results_config]
 
-    summary_number_of_detection(results, target_directory, column_name='total_drift_detection')
+    summary_data_frame = summary_number_of_detection(results)
+    summary_data_frame['ML_region'] = summary_data_frame['ML_region'].map(USA_STATES_CODES).str.upper()
+
+    with open(f'{target_directory}/{column_name}_tab_summary_v2.tex', "w") as f:
+        f.write(build_latex(summary_data_frame))
 
 
-def summary_number_of_detection(results_config, target_directory, column_name='total_drift_detection'):
+def summary_number_of_detection(results_config):
     results = pd.DataFrame(data={})
 
     for (experiment, drift_results) in results_config:
@@ -39,12 +46,7 @@ def summary_number_of_detection(results_config, target_directory, column_name='t
         else:
             results = pd.merge(results, drift_results, on='ML_region')
 
-    results['ML_region'] = results['ML_region'].map(USA_STATES_CODES).str.upper()
-
-    with open(f'{target_directory}/{column_name}_tab_summary_v2.tex', "w") as f:
-        f.write(build_latex(results))
-
-    print('DONE')
+    return results
 
 
 def build_latex(results):
@@ -71,5 +73,16 @@ def build_latex(results):
     latex_code = latex_code.replace('SRP_HDDM_ONESIDED & SRP_HDDM_ONESIDED_10k', '\multicolumn{2}{c|}{\makecell{SRP HDDM \\\\ ONESIDED}}')
     latex_code = latex_code.replace('HT_HDDM_ONESIDED & HT_HDDM_ONESIDED_10k', '\multicolumn{2}{c|}{\makecell{HT HDDM \\\\ ONESIDED}}')
     latex_code = latex_code.replace('ARF_HDDM_ONESIDED & ARF_HDDM_ONESIDED_10k', '\multicolumn{2}{c|}{\makecell{ARF HDDM \\\\ ONESIDED}}')
+
+    latex_code = latex_code.replace('01_TOLEDO', '01 TOLEDO')
+    latex_code = latex_code.replace('02_LIMA', '02 LIMA')
+    latex_code = latex_code.replace('03_DAYTON', '03 DAYTON')
+    latex_code = latex_code.replace('04_SPRINGFIELD', '04 SPRINGFIELD')
+    latex_code = latex_code.replace('05_AKRON', '05 AKRON')
+    latex_code = latex_code.replace('06_CANTON', '06 CANTON')
+    latex_code = latex_code.replace('07_MANSFIELD', '07 MANSFIELD')
+    latex_code = latex_code.replace('08_STEUBENVILLE', '08 STEUBENVILLE')
+    latex_code = latex_code.replace('09_YOUNGSTOWN', '09 YOUNGSTOWN')
+    latex_code = latex_code.replace('10_RURAL', '10 RURAL')
 
     return latex_code
